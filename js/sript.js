@@ -2,8 +2,9 @@ window.addEventListener('DOMContentLoaded', function () {
   'use strict';
   // Window Tab
   let glazTab = document.querySelectorAll('.link-tab'),
-      glBlock = document.querySelector('.glazing_slider'),
       body = document.querySelector('body'),
+      modalHeader = document.querySelector('.popup_engineer'),
+      modalPhone = document.querySelector('.popup'),
       glazContent = document.querySelectorAll('.glaz-content');
       function hideGlaz(h) {
         for(let i = h; i < glazContent.length; i++){
@@ -61,6 +62,17 @@ window.addEventListener('DOMContentLoaded', function () {
         }
       }
     }
-    console.log(target);
-  });
+    // Modal btn one
+    if (target.classList.contains('header_btn')) {
+      modalHeader.style.display = 'block';
+    }
+    if (target.classList.contains('popup_close') || target.classList.contains('popup_engineer')) {
+      modalHeader.style.display = 'none';
+    }
+    if (target.classList.contains('phone_link')) {
+      modalPhone.style.display = 'block';
+    } else if (target.classList.contains('popup_close') || target.classList.contains('popup')) {
+      modalPhone.style.display = 'none';
+    }
+  });  
 });
