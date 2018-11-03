@@ -89,6 +89,17 @@ textarea:focus {
   font-size: 1.1rem;
   color: #666;
 }
+.foto-block{
+  
+}
+.timer-numbers {
+  margin-top: 40px;
+  font-size: 48px;
+  color: #000;
+}
+.foto-max{
+  background: rgba(0, 0, 0, 0.5);
+}
 .button {
   padding: 2.5rem 0rem;
   font-size: 1.7rem;
