@@ -505,10 +505,12 @@ textarea:focus {
   font-style: normal;
   color: #000000;
 }
-.decoration .external,
-.decoration .rising,
-.decoration .roof {
+
+.hide {
   display: none;
+}
+.show {
+  display: block;
 }
 /*Our works*/
 .works {
