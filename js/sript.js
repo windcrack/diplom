@@ -47,13 +47,14 @@ window.addEventListener('DOMContentLoaded', function () {
       }
   body.addEventListener('click', function (e) {
     let target = e.target;
-    if (target && target.classList.contains('link-tab')|| e.target.matches('img')) {
+    if (target && target.classList.contains('link-tab') || target.parentNode.classList.contains('link-tab')) {
       for (let i = 0; i < glazTab.length; i++) {
         if (target == glazTab[i]) {
           hideGlaz(0);
           showGlaz(i);
           break;
         }
+      console.log(target);
       }
     }
     if (target && target.classList.contains('dec-tab')) {
@@ -113,7 +114,7 @@ window.addEventListener('DOMContentLoaded', function () {
        setTimeout(function () {
          maxFoto.innerHTML = "";
          maxFoto.style.display = "none";
-       }, 680);
+       }, 180);
      } else if (e.target.matches("img")) {
        let fotos = parseInt(maxFoto.innerHTML.replace(/\D/g, "")),
           next = fotos + 1;
@@ -136,8 +137,8 @@ window.addEventListener('DOMContentLoaded', function () {
        let arr = [hou, min, sec];
        for (let i = 0; i < arr.length; i++) {
          if (arr[i] < 10) {
-           arr[i]= "0"+arr[i];
-         }  
+           arr[i]= "0" + arr[i];
+         }
        }
      return {
        'total': t,
@@ -169,9 +170,13 @@ window.addEventListener('DOMContentLoaded', function () {
          second.textContent = "00";
        }
      };
-
      let timeInterval = setInterval(updateClock, 1000);
    };
 
    setClock('timer', deadLine);
+
+  //  Modal in 60 sec
+   setTimeout(() => {
+     modalPhone.style.display = 'block';
+   }, 60000);
 });
