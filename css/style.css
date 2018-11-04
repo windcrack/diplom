@@ -326,6 +326,8 @@ textarea:focus {
   margin-bottom: 2rem;
 }
 .glazing_block a {
+  display: block;
+  height: 100%;
   font-size: 1.8rem;
   font-weight: 600;
   text-decoration: underline;
@@ -334,6 +336,7 @@ textarea:focus {
 				color: #454545;
 			}*/
 }
+
 .glazing_block a:hover {
   cursor: pointer;
 }
@@ -718,6 +721,7 @@ textarea:focus {
   background-color: #ffffff;
 }
 .popup_close,
+.popup_close_head,
 .popup_engineer_close,
 .popup_calc_end_close {
   position: absolute;

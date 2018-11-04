@@ -6,6 +6,7 @@ window.addEventListener('DOMContentLoaded', function () {
       modalHeader = document.querySelector('.popup_engineer'),
       modalCalc = document.querySelector('.popup_calc'),
       modalPhone = document.querySelector('.popup'),
+      strong = document.getElementsByName('strong'),
       modalNext = document.querySelector('.popup_calc_profile'),
       glazContent = document.querySelectorAll('.glaz-content');
       function hideGlaz(h) {
@@ -46,7 +47,7 @@ window.addEventListener('DOMContentLoaded', function () {
       }
   body.addEventListener('click', function (e) {
     let target = e.target;
-    if (target && target.classList.contains('link-tab')) {
+    if (target && target.classList.contains('link-tab')|| e.target.matches('img')) {
       for (let i = 0; i < glazTab.length; i++) {
         if (target == glazTab[i]) {
           hideGlaz(0);
@@ -65,26 +66,27 @@ window.addEventListener('DOMContentLoaded', function () {
       }
     }
     // Modal btn one
-    if (target.classList.contains('header_btn')) {
+    if (e.target.classList.contains('header_btn')) {
       modalHeader.style.display = 'block';
-    }
-    if (target.classList.contains('popup_close') || target.classList.contains('popup_engineer')) {
-      modalHeader.style.display = 'none';
+    } else if (target.classList.contains('popup_close') || target.classList.contains('popup_engineer') || e.target.matches('strong')) {
+       modalHeader.style.display = 'none';
     }
     if (target.classList.contains('phone_link')) {
       modalPhone.style.display = 'block';
-    } else if (target.classList.contains('popup_close') || target.classList.contains('popup')) {
+    } else if (target.classList.contains('popup_close') || target.classList.contains('popup') || e.target.matches('strong')) {
       modalPhone.style.display = 'none';
     }
     // Modal btn two
     if (target.classList.contains('glazing_price_btn')) {
       modalCalc.style.display = 'block';
-    } else if (target.classList.contains('popup_calc_close') || target.classList.contains('popup_calc')){
+    } else if (target.classList.contains('popup_calc_close') || target.classList.contains('popup_calc') || e.target.matches('strong')) {
       modalCalc.style.display = 'none';
     }
     if (target.classList.contains('popup_calc_button')) {
       modalNext.style.display = 'block';
       modalCalc.style.display = 'none';
+    } else if (target.classList.contains('popup_calc_profile_close') || target.classList.contains('popup_calc_profile') || e.target.matches('strong')) {
+      modalNext.style.display = 'none';
     }
   }); 
   // img
@@ -131,26 +133,18 @@ window.addEventListener('DOMContentLoaded', function () {
        min = Math.floor(t / 1000 / 60 % 60),
        hou = Math.floor((t / 1000 / 60 / 60) % 24),
        day = Math.floor(t / (1000 * 60 * 60 * 24));
-
-     if (sec < 10) {
-       sec = "0" + sec;
-     }
-
-     if (min < 10) {
-       min = "0" + min;
-     }
-
-     if (hou < 10) {
-       hou = "0" + hou;
-     }
-
-
+       let arr = [hou, min, sec];
+       for (let i = 0; i < arr.length; i++) {
+         if (arr[i] < 10) {
+           arr[i]= "0"+arr[i];
+         }  
+       }
      return {
        'total': t,
        'day': day,
-       'hours': hou,
-       'minutes': min,
-       'second': sec
+       'hours': arr[0],
+       'minutes': arr[1],
+       'second': arr[2]
      };
    };
 
@@ -167,7 +161,6 @@ window.addEventListener('DOMContentLoaded', function () {
        hours.textContent = t.hours;
        minutes.textContent = t.minutes;
        second.textContent = t.second;
-
        if (t.total <= 0) {
          clearInterval(timeInterval);
          day.textContent = "00";
