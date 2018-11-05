@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded', function () {
     // Modal btn one
     if (e.target.classList.contains('header_btn')) {
       modalHeader.style.display = 'block';
-    } else if (target.classList.contains('popup_engineer') || e.target.matches('strong')) {
+    } else if (target.classList.contains('popup_close') || target.classList.contains('popup_engineer') || e.target.matches('strong')) {
        modalHeader.style.display = 'none';
     }
     if (target.classList.contains('phone_link')) {
