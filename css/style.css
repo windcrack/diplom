@@ -517,7 +517,15 @@ textarea:focus {
   font-style: normal;
   color: #000000;
 }
-
+.img-content {
+  margin: 0 auto;
+}
+.activ{
+   -webkit-transform: scale(1.1);
+   -ms-transform: scale(1.1);
+   -o-transform: scale(1.1);
+   transform: scale(1.1);
+}
 .hide {
   display: none;
 }

@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', function () {
       modalCalc = document.querySelector('.popup_calc'),
       modalPhone = document.querySelector('.popup'),
       modalNext = document.querySelector('.popup_calc_profile'),
+      modalEnd = document.querySelector('.popup_calc_end'),
       glazContent = document.querySelectorAll('.glaz-content');
       function hideGlaz(h) {
         for(let i = h; i < glazContent.length; i++){
@@ -45,15 +46,32 @@ window.addEventListener('DOMContentLoaded', function () {
           noClick[s].classList.add('after_click');
         }
       }
+      // картинки в калькуляторе
+      let typeRef = document.querySelectorAll('.type-ref'),
+          imgContent = document.querySelectorAll('.img-content');
+      function hideImg(h) {
+        for(let i = h; i < imgContent.length; i++){
+          imgContent[i].classList.remove('show');
+          imgContent[i].classList.add('hide');
+          typeRef[i].classList.remove('activ');
+        }
+      }
+      hideImg(1);
+      function showImg(s) {
+        if (imgContent[s].classList.contains('hide')) {
+          imgContent[s].classList.remove('hide');
+          imgContent[s].classList.add('show');
+          typeRef[s].classList.add('activ');
+        }
+      }
   body.addEventListener('click', function (e) {
     let target = e.target;
     if (target && target.classList.contains('glazing_block') || target.parentNode.classList.contains('glazing_block')) {
-      console.log(target);
       for (let i = 0; i < glazTab.length; i++) {
         if (target == glazTab[i] || target.parentNode == glazTab[i]) {
           hideGlaz(0);
           showGlaz(i);
-          // break;
+          break;
         }
       }
     }
@@ -66,33 +84,51 @@ window.addEventListener('DOMContentLoaded', function () {
         }
       }
     }
-    // Modal btn one
+    if (target && target.classList.contains('type-ref')) {
+      for (let i = 0; i < typeRef.length; i++) {
+        if (target == typeRef[i] || target.parentNode == typeRef[i]) {
+          hideImg(0);
+          showImg(i);
+          break;
+        }
+      }
+    }
+    // Modal btn  
     if (e.target.classList.contains('header_btn')) {
       modalHeader.style.display = 'block';
-    } else if (target.classList.contains('popup_close') || target.classList.contains('popup_engineer') || e.target.matches('strong')) {
+    } else if (target.classList.contains('popup_close') || target.classList.contains('popup_engineer')) {
        modalHeader.style.display = 'none';
     }
     if (target.classList.contains('phone_link')) {
       modalPhone.style.display = 'block';
-    } else if (target.classList.contains('popup_close') || target.classList.contains('popup') || e.target.matches('strong')) {
+    } else if (target.classList.contains('popup_close') || target.classList.contains('popup')) {
       modalPhone.style.display = 'none';
     }
-    // Modal btn two
     if (target.classList.contains('glazing_price_btn')) {
       modalCalc.style.display = 'block';
-    } else if (target.classList.contains('popup_calc_close') || target.classList.contains('popup_calc') || e.target.matches('strong')) {
+    } else if (target.classList.contains('popup_calc_close') || target.classList.contains('popup_calc')) {
       modalCalc.style.display = 'none';
     }
     if (target.classList.contains('popup_calc_button')) {
       modalNext.style.display = 'block';
       modalCalc.style.display = 'none';
-    } else if (target.classList.contains('popup_calc_profile_close') || target.classList.contains('popup_calc_profile') || e.target.matches('strong')) {
+    } else if (target.classList.contains('popup_calc_profile_close') || target.classList.contains('popup_calc_profile')) {
       modalNext.style.display = 'none';
     }
     if (target.classList.contains('popup_calc_profile_button')) {
-      
+      modalNext.style.display = 'none';
+      modalEnd.style.display = 'block';
+    } else if (target.classList.contains('popup_calc_end_close') || target.classList.contains('popup_calc_end')) {
+      modalEnd.style.display = 'none';
     }
-  }); 
+  });
+  // Validator
+   body.addEventListener('input', (e) => {
+     let target = e.target;
+      if (target.classList.contains('val')) {
+        target.value = target.value.replace(/[^0-9]/g, '');
+      }
+   });
   // img
    let minFoto = document.querySelectorAll(".foto-min"),
       foto = document.querySelector(".fotos"),
@@ -182,4 +218,66 @@ window.addEventListener('DOMContentLoaded', function () {
    setTimeout(() => {
      modalPhone.style.display = 'block';
    }, 60000);
+  //  Sed form
+    let sendRequest = function (target) {
+
+      let message = {
+          loading: "Загрузка....",
+          success: "Спасибо! Скоро мы с вами свяжемся!",
+          failure: "Что-то пошло не так..."
+        },
+        statusMessage = document.createElement('div');
+        statusMessage.classList.add('status');
+        target.appendChild(statusMessage);
+      let formData = new FormData(target),
+        obj = {};
+      formData.forEach(function (value, key) {
+        obj[key] = value;
+      });
+      let json = JSON.stringify(obj);
+
+      function postData(json) {
+
+        return new Promise(function (resolve, reject) {
+
+          let request = new XMLHttpRequest();
+          request.open('POST', 'server.php');
+          request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+          request.onreadystatechange = function () {
+            if (request.readyState < 4) {
+              resolve();
+            } else if (request.readyState === 4 && request.status === 200) {
+              resolve();
+            } else {
+              reject();
+            }
+          };
+          request.send(json);
+        });
+      }
+
+      function clearInput() {
+        let input = target.getElementsByTagName('input');
+        for (let i = 0; i < input.length; i++) {
+          input[i].value = '';
+        }
+        setTimeout(() => {
+          statusMessage.innerHTML = "";
+        }, 10000);
+      }
+      postData(formData)
+        .then(() => statusMessage.innerHTML = message.loading)
+        .then(() => statusMessage.innerHTML = message.success)
+        .catch(() => statusMessage.innerHTML = message.failure)
+        .then(clearInput);
+    };
+    body.addEventListener('submit', e => {
+      e.preventDefault();
+      let target = e.target;
+
+      if (target.classList.contains('form')) {
+        sendRequest(target);
+      }
+    });
 });
