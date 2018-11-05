@@ -1,19 +1,19 @@
 window.addEventListener('DOMContentLoaded', function () {
   'use strict';
   // Window Tab
-  let glazTab = document.querySelectorAll('.link-tab'),
+  let glazTab = document.querySelectorAll('.glazing_block'),
+      glazLink = document.querySelectorAll('.link-tab'),
       body = document.querySelector('body'),
       modalHeader = document.querySelector('.popup_engineer'),
       modalCalc = document.querySelector('.popup_calc'),
       modalPhone = document.querySelector('.popup'),
-      strong = document.getElementsByName('strong'),
       modalNext = document.querySelector('.popup_calc_profile'),
       glazContent = document.querySelectorAll('.glaz-content');
       function hideGlaz(h) {
         for(let i = h; i < glazContent.length; i++){
           glazContent[i].classList.remove('show');
           glazContent[i].classList.add('hide');
-          glazTab[i].classList.remove('active');
+          glazLink[i].classList.remove('active');
         }
       }
       hideGlaz(1);
@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', function () {
         if (glazContent[s].classList.contains('hide')) {
           glazContent[s].classList.remove('hide');
           glazContent[s].classList.add('show');
-          glazTab[s].classList.add('active');
+          glazLink[s].classList.add('active');
         }
       }
     // Decoration Tab
@@ -47,14 +47,14 @@ window.addEventListener('DOMContentLoaded', function () {
       }
   body.addEventListener('click', function (e) {
     let target = e.target;
-    if (target && target.classList.contains('link-tab') || target.parentNode.classList.contains('link-tab')) {
+    if (target && target.classList.contains('glazing_block') || target.parentNode.classList.contains('glazing_block')) {
+      console.log(target);
       for (let i = 0; i < glazTab.length; i++) {
-        if (target == glazTab[i]) {
+        if (target == glazTab[i] || target.parentNode == glazTab[i]) {
           hideGlaz(0);
           showGlaz(i);
-          break;
+          // break;
         }
-      console.log(target);
       }
     }
     if (target && target.classList.contains('dec-tab')) {
@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded', function () {
     // Modal btn one
     if (e.target.classList.contains('header_btn')) {
       modalHeader.style.display = 'block';
-    } else if (target.classList.contains('popup_close') || target.classList.contains('popup_engineer') || e.target.matches('strong')) {
+    } else if (target.classList.contains('popup_engineer') || e.target.matches('strong')) {
        modalHeader.style.display = 'none';
     }
     if (target.classList.contains('phone_link')) {
@@ -143,9 +143,9 @@ window.addEventListener('DOMContentLoaded', function () {
      return {
        'total': t,
        'day': day,
-       'hours': arr[0],
-       'minutes': arr[1],
-       'second': arr[2]
+       'hours': hou,
+       'minutes': min,
+       'second': sec
      };
    };
 
@@ -168,6 +168,11 @@ window.addEventListener('DOMContentLoaded', function () {
          hours.textContent = "00";
          minutes.textContent = "00";
          second.textContent = "00";
+       }else{
+        //  days.textContent = day;
+        //  hours.textContent = hou < 10 ? `0${hou}` : hou;
+        //  minutes.textContent = min < 10 ? `0${min}` : min;
+        //  second.textContent = sec < 10 ? `0${sec}` : sec;
        }
      };
      let timeInterval = setInterval(updateClock, 1000);
