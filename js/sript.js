@@ -89,6 +89,9 @@ window.addEventListener('DOMContentLoaded', function () {
     } else if (target.classList.contains('popup_calc_profile_close') || target.classList.contains('popup_calc_profile') || e.target.matches('strong')) {
       modalNext.style.display = 'none';
     }
+    if (target.classList.contains('popup_calc_profile_button')) {
+      
+    }
   }); 
   // img
    let minFoto = document.querySelectorAll(".foto-min"),
@@ -126,7 +129,7 @@ window.addEventListener('DOMContentLoaded', function () {
      }
    });
   //  Timer
-   let deadLine = '2019-03-4';
+   let deadLine = '2019-06-4';
 
    let getTimeRem = endtime => {
      let t = Date.parse(deadLine) - Date.parse(new Date()),
@@ -143,9 +146,9 @@ window.addEventListener('DOMContentLoaded', function () {
      return {
        'total': t,
        'day': day,
-       'hours': hou,
-       'minutes': min,
-       'second': sec
+       'hours': arr[0],
+       'minutes': arr[1],
+       'second': arr[2]
      };
    };
 
@@ -168,11 +171,6 @@ window.addEventListener('DOMContentLoaded', function () {
          hours.textContent = "00";
          minutes.textContent = "00";
          second.textContent = "00";
-       }else{
-        //  days.textContent = day;
-        //  hours.textContent = hou < 10 ? `0${hou}` : hou;
-        //  minutes.textContent = min < 10 ? `0${min}` : min;
-        //  second.textContent = sec < 10 ? `0${sec}` : sec;
        }
      };
      let timeInterval = setInterval(updateClock, 1000);
