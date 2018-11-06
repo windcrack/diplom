@@ -27,14 +27,13 @@ window.addEventListener('DOMContentLoaded', function () {
         }
       }
     // Decoration Tab
-    let decTab = document.querySelectorAll('.decoration_item'),
-        noClick = document.querySelectorAll('.no_click'),
+    let decTab = document.querySelectorAll('.no_click'),
         decorContent = document.querySelectorAll('.decor-content');
       function hideDecor(h) {
         for (let i = h; i < decorContent.length; i++) {
           decorContent[i].classList.remove('show');
           decorContent[i].classList.add('hide');
-          noClick[i].classList.remove('after_click');
+          decTab[i].classList.remove('after_click');
         }
       }
       hideDecor(1);
@@ -43,7 +42,7 @@ window.addEventListener('DOMContentLoaded', function () {
         if (decorContent[s].classList.contains('hide')) {
           decorContent[s].classList.remove('hide');
           decorContent[s].classList.add('show');
-          noClick[s].classList.add('after_click');
+          decTab[s].classList.add('after_click');
         }
       }
       // картинки в калькуляторе
@@ -71,16 +70,17 @@ window.addEventListener('DOMContentLoaded', function () {
         if (target == glazTab[i] || target.parentNode == glazTab[i]) {
           hideGlaz(0);
           showGlaz(i);
-          break;
+          // break;
         }
       }
     }
-    if (target && target.classList.contains('decoration_item') || target.parentNode.classList.contains('decoration_item')) {
+    if (target && target.classList.contains('no_click') || target.parentNode.classList.contains('no_click')) {
+      
       for (let i = 0; i < decTab.length; i++) {
         if (target == decTab[i] || target.parentNode == decTab[i]) {
           hideDecor(0);
           showDecor(i);
-          break;
+          // break;
         }
       }
     }
