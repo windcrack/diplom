@@ -45,27 +45,8 @@ window.addEventListener('DOMContentLoaded', function () {
           decTab[s].classList.add('after_click');
         }
       }
-      // картинки в калькуляторе
-      let typeRef = document.querySelectorAll('.type-ref'),
-          imgContent = document.querySelectorAll('.img-content');
-      function hideImg(h) {
-        for(let i = h; i < imgContent.length; i++){
-          imgContent[i].classList.remove('show');
-          imgContent[i].classList.add('hide');
-          typeRef[i].classList.remove('activ');
-          typeRef[i].classList.remove("choosen");
-        }
-      }
-      hideImg(1);
-      function showImg(s) {
-        if (imgContent[s].classList.contains('hide')) {
-          imgContent[s].classList.remove('hide');
-          imgContent[s].classList.add('show');
-          typeRef[s].classList.add('activ');
-          typeRef[s].classList.add("choosen");
-        }
-      }
   body.addEventListener('click', function (e) {
+    
     let target = e.target;
     if (target && target.classList.contains('glazing_block') || target.parentNode.classList.contains('glazing_block')) {
       for (let i = 0; i < glazTab.length; i++) {
@@ -82,16 +63,6 @@ window.addEventListener('DOMContentLoaded', function () {
         if (target == decTab[i] || target.parentNode == decTab[i]) {
           hideDecor(0);
           showDecor(i);
-          break;
-        }
-      }
-    }
-    if (target && target.classList.contains('type-ref')) {
-      for (let i = 0; i < typeRef.length; i++) {
-        if (target == typeRef[i] || target.parentNode == typeRef[i]) {
-          hideImg(0);
-          showImg(i);
-          
           break;
         }
       }
@@ -123,6 +94,8 @@ window.addEventListener('DOMContentLoaded', function () {
   let coldBox = document.querySelector(".cold"),
     hotBox = document.querySelector(".hoot"),
     form = document.querySelector(".form_calc"),
+    balconIcons = document.querySelectorAll(".balcon_icons > a > img"),
+    balconBig = document.querySelectorAll(".big_img > img"),
     formDataCalk = new FormData(),
     statusMessage = document.createElement("div"),
     message = {
@@ -130,14 +103,29 @@ window.addEventListener('DOMContentLoaded', function () {
       success: "Мы скоро с вами свяжемся!",
       failure: "Произошла ошибка"
     };
-
+  
+  balconIcons.forEach((icon, index) => {
+    icon.addEventListener("click", event => {
+      event.preventDefault();
+      balconIcons.forEach(icon => {
+        icon.style.width = "20%";
+        icon.classList.remove("choosen");
+      });
+      balconBig.forEach(img => {
+        img.style.display = "none";
+      });
+      event.target.style.width = "30%";
+      event.target.classList.add("choosen");
+      balconBig[index].style.display = "inline-block";
+    });
+  });
   body.addEventListener("click", (e) => {
     let width = document.querySelector("#width").value,
-      height = document.querySelector("#height").value;
+      height = document.querySelector("#height").value,
       type = document.querySelector(".choosen");
     let target = e.target;
     if (target.classList.contains('popup_calc_button')) {  
-      if (width == "" || height == "" || width == "0" || height == "0") {
+      if (width == "" || height == "" || width == "0" || height == "0" || type == null) {
         alert("Введите высоту и ширину, выбирите форму балкона!");
       } else {
         formDataCalk.append("form", type.alt);
