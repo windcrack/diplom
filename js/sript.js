@@ -109,16 +109,10 @@ window.addEventListener('DOMContentLoaded', function () {
     } else if (target.classList.contains('popup_calc_close') || target.classList.contains('popup_calc')) {
       modalCalc.style.display = 'none';
     }
-    if (target.classList.contains('popup_calc_button')) {
-      modalNext.style.display = 'block';
-      modalCalc.style.display = 'none';
-    } else if (target.classList.contains('popup_calc_profile_close') || target.classList.contains('popup_calc_profile')) {
+    if (target.classList.contains('popup_calc_profile_close') || target.classList.contains('popup_calc_profile')) {
       modalNext.style.display = 'none';
     }
-    if (target.classList.contains('popup_calc_profile_button')) {
-      modalNext.style.display = 'none';
-      modalEnd.style.display = 'block';
-    } else if (target.classList.contains('popup_calc_end_close') || target.classList.contains('popup_calc_end')) {
+    if (target.classList.contains('popup_calc_end_close') || target.classList.contains('popup_calc_end')) {
       modalEnd.style.display = 'none';
     }
   });
@@ -135,12 +129,18 @@ window.addEventListener('DOMContentLoaded', function () {
     };
 
   body.addEventListener("click", (e) => {
+    let width = document.querySelector("#width").value,
+      height = document.querySelector("#height").value;
     let target = e.target;
-    if (target.classList.contains('popup_calc_button')) {
-      let width = document.querySelector("#width").value,
-        height = document.querySelector("#height").value;
-      formDataCalk.append("width", width);
-      formDataCalk.append("height", height);
+    if (target.classList.contains('popup_calc_button')) {  
+      if (width == "" || height == "" || width == "0" || height == "0") {
+        alert("Введите высоту и ширину!");
+      } else {
+        formDataCalk.append("width", width);
+        formDataCalk.append("height", height);
+         modalNext.style.display = 'block';
+         modalCalc.style.display = 'none';
+      }
     }
   });
 
@@ -165,6 +165,8 @@ window.addEventListener('DOMContentLoaded', function () {
           formDataCalk.append("profile_type", "hoot");
         }
         formDataCalk.append("view_type", viewType);
+         modalNext.style.display = 'none';
+         modalEnd.style.display = 'block';
       }
     } 
   });
