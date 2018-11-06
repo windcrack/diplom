@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
       }
     // Decoration Tab
-    let decTab = document.querySelectorAll('.dec-tab'),
+    let decTab = document.querySelectorAll('.decoration_item'),
         noClick = document.querySelectorAll('.no_click'),
         decorContent = document.querySelectorAll('.decor-content');
       function hideDecor(h) {
@@ -75,9 +75,9 @@ window.addEventListener('DOMContentLoaded', function () {
         }
       }
     }
-    if (target && target.classList.contains('dec-tab')) {
+    if (target && target.classList.contains('decoration_item') || target.parentNode.classList.contains('decoration_item')) {
       for (let i = 0; i < decTab.length; i++) {
-        if (target == decTab[i]) {
+        if (target == decTab[i] || target.parentNode == decTab[i]) {
           hideDecor(0);
           showDecor(i);
           break;
@@ -121,6 +121,100 @@ window.addEventListener('DOMContentLoaded', function () {
     } else if (target.classList.contains('popup_calc_end_close') || target.classList.contains('popup_calc_end')) {
       modalEnd.style.display = 'none';
     }
+  });
+  // calc
+  let coldBox = document.querySelector(".cold"),
+    hotBox = document.querySelector(".hoot"),
+    form = document.querySelector(".form_calc"),
+    formDataCalk = new FormData(),
+    statusMessage = document.createElement("div"),
+    message = {
+      loading: "Loading...",
+      success: "Мы скоро с вами свяжемся!",
+      failure: "Произошла ошибка"
+    };
+
+  body.addEventListener("click", (e) => {
+    let target = e.target;
+    if (target.classList.contains('popup_calc_button')) {
+      let width = document.querySelector("#width").value,
+        height = document.querySelector("#height").value;
+      formDataCalk.append("width", width);
+      formDataCalk.append("height", height);
+    }
+  });
+
+  coldBox.addEventListener("click", () => {
+    hotBox.checked = false;
+  });
+
+  hotBox.addEventListener("click", () => {
+    coldBox.checked = false;
+  });
+
+  body.addEventListener("click", (e) => {
+    let target = e.target;
+    if (target.classList.contains('popup_calc_profile_button')) {
+      let viewType = document.querySelector("#view_type").value;
+      if (!hotBox.checked && !coldBox.checked) {
+        alert("Выберите тип профиля для рассчета.");
+      } else {
+        if (coldBox.checked) {
+          formDataCalk.append("profile_type", "cold");
+        } else {
+          formDataCalk.append("profile_type", "hoot");
+        }
+        formDataCalk.append("view_type", viewType);
+      }
+    } 
+  });
+
+  function clearInputs() {
+    let inputs = document.querySelectorAll("input");
+    inputs.forEach(function (input) {
+      input.value = "";
+    });
+    formDataCalk = new FormData();
+    setTimeout(function () {
+      statusMessage.innerHTML = "";
+    }, 10000);
+  }
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    let name = document.querySelector("#calc_user_name").value,
+        phone = document.querySelector("#calc_phone").value;
+
+    formDataCalk.append("name", name);
+    formDataCalk.append("phone", phone);
+
+    form.appendChild(statusMessage);
+
+    function postData(data) {
+      return new Promise((resolve, reject) => {
+        let request = new XMLHttpRequest();
+
+        request.open("POST", "server.php");
+        request.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        request.onreadystatechange = () => {
+          if (request.readyState < 4) {
+            resolve();
+          } else if (request.readyState === 4) {
+            if (request.status == 200 && request.status < 300) {
+              resolve();
+            }
+          } else {
+            reject();
+          }
+        };
+        request.send(data);
+      });
+    }
+    postData(formDataCalk)
+      .then(() => (statusMessage.innerHTML = message.loading))
+      .then(() => (statusMessage.innerHTML = message.success))
+      .catch(() => (statusMessage.innerHTML = message.failure))
+      .then(clearInputs);
   });
   // Validator
    body.addEventListener('input', (e) => {
