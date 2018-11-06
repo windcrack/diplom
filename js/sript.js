@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', function () {
         for (let i = h; i < decorContent.length; i++) {
           decorContent[i].classList.remove('show');
           decorContent[i].classList.add('hide');
-          decTab[i].classList.remove('after_click');
+          decTab[i].classList.remove('after_click'); 
         }
       }
       hideDecor(1);
@@ -53,6 +53,7 @@ window.addEventListener('DOMContentLoaded', function () {
           imgContent[i].classList.remove('show');
           imgContent[i].classList.add('hide');
           typeRef[i].classList.remove('activ');
+          typeRef[i].classList.remove("choosen");
         }
       }
       hideImg(1);
@@ -61,6 +62,7 @@ window.addEventListener('DOMContentLoaded', function () {
           imgContent[s].classList.remove('hide');
           imgContent[s].classList.add('show');
           typeRef[s].classList.add('activ');
+          typeRef[s].classList.add("choosen");
         }
       }
   body.addEventListener('click', function (e) {
@@ -80,7 +82,7 @@ window.addEventListener('DOMContentLoaded', function () {
         if (target == decTab[i] || target.parentNode == decTab[i]) {
           hideDecor(0);
           showDecor(i);
-          // break;
+          break;
         }
       }
     }
@@ -89,6 +91,7 @@ window.addEventListener('DOMContentLoaded', function () {
         if (target == typeRef[i] || target.parentNode == typeRef[i]) {
           hideImg(0);
           showImg(i);
+          
           break;
         }
       }
@@ -131,15 +134,17 @@ window.addEventListener('DOMContentLoaded', function () {
   body.addEventListener("click", (e) => {
     let width = document.querySelector("#width").value,
       height = document.querySelector("#height").value;
+      type = document.querySelector(".choosen");
     let target = e.target;
     if (target.classList.contains('popup_calc_button')) {  
       if (width == "" || height == "" || width == "0" || height == "0") {
-        alert("Введите высоту и ширину!");
+        alert("Введите высоту и ширину, выбирите форму балкона!");
       } else {
+        formDataCalk.append("form", type.alt);
         formDataCalk.append("width", width);
         formDataCalk.append("height", height);
-         modalNext.style.display = 'block';
-         modalCalc.style.display = 'none';
+        modalNext.style.display = 'block';
+        modalCalc.style.display = 'none';
       }
     }
   });
@@ -160,11 +165,11 @@ window.addEventListener('DOMContentLoaded', function () {
         alert("Выберите тип профиля для рассчета.");
       } else {
         if (coldBox.checked) {
-          formDataCalk.append("profile_type", "cold");
+          formDataCalk.append("Вид", "Холодный");
         } else {
-          formDataCalk.append("profile_type", "hoot");
+          formDataCalk.append("Вид", "Теплый");
         }
-        formDataCalk.append("view_type", viewType);
+        formDataCalk.append("Тип", viewType);
          modalNext.style.display = 'none';
          modalEnd.style.display = 'block';
       }
