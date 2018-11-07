@@ -77,6 +77,7 @@ export function tabs(){
       modalHeader.style.display = 'none';
     }
     if (target.classList.contains('phone_link')) {
+      e.preventDefault();
       modalPhone.style.display = 'block';
     } else if (target.classList.contains('popup_close') || target.classList.contains('popup')) {
       modalPhone.style.display = 'none';
