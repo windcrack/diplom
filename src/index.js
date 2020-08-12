@@ -1,17 +1,16 @@
 "use strict";
 
-import {Form} from "./send";
-import {timer} from "./timer";
-import {img} from "./img";
-import {valid} from "./validator";
-import {tabs} from "./windowtab";
-import {calc} from "./calc";
+import { form } from "./send.js";
+import { timer } from "./timer.js";
+import { img } from "./img.js";
+import { valid } from "./validator.js";
+import { tabs } from "./windowtab.js";
+import { calc } from "./calc.js";
 
-window.addEventListener("DOMContentLoaded", function () {
-    Form();
-    timer();
-    img();
-    valid();
-    tabs();
-    calc();
-});
+
+form();
+timer();
+img();
+valid();
+tabs();
+calc();

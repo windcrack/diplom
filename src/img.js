@@ -1,4 +1,4 @@
-export function img() {
+export const img = () => {
   let minFoto = document.querySelectorAll(".foto-min"),
     foto = document.querySelector(".fotos"),
     maxFoto = document.createElement("div");

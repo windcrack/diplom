@@ -1,4 +1,4 @@
-export function tabs(){
+export const tabs = () => {
 
   'use strict';
   // Window Tab

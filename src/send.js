@@ -1,4 +1,4 @@
-export function Form() {
+export const form = () => {
   let sendRequest = function (target) {
 
     let message = {

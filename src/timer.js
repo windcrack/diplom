@@ -1,4 +1,4 @@
-export function timer() {
+export const  timer = () => {
     let deadLine = '2022-07-4';
 
     let getTimeRem = endtime => {

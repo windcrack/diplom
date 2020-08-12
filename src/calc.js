@@ -1,4 +1,4 @@
-export function calc() {
+export const  calc = () => {
   let coldBox = document.querySelector(".cold"),
     hotBox = document.querySelector(".hoot"),
     body = document.querySelector('body'),

@@ -1,4 +1,4 @@
-export function valid() {
+export const valid = () => {
   let body = document.querySelector('body');
   body.addEventListener('input', (e) => {
     let target = e.target;
