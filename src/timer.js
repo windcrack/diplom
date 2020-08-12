@@ -1,5 +1,5 @@
 export function timer() {
-    let deadLine = '2021-07-4';
+    let deadLine = '2022-07-4';
 
     let getTimeRem = endtime => {
       let t = Date.parse(deadLine) - Date.parse(new Date()),
